@@ -6,17 +6,17 @@ import (
 	"fmt"
 	"os"
 
-	extapi "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	extapi "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"k8s.io/klog"
+	"k8s.io/klog/v2"
 
-	"github.com/jetstack/cert-manager-webhook-desec/desec"
-	"github.com/jetstack/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
-	"github.com/jetstack/cert-manager/pkg/acme/webhook/cmd"
-	cmmeta "github.com/jetstack/cert-manager/pkg/apis/meta/v1"
-	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/util"
+	"github.com/2143-Labs/cert-manager-webhook-desec/desec"
+	"github.com/cert-manager/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
+	"github.com/cert-manager/cert-manager/pkg/acme/webhook/cmd"
+	cmmeta "github.com/cert-manager/cert-manager/pkg/apis/meta/v1"
+	"github.com/cert-manager/cert-manager/pkg/issuer/acme/dns/util"
 )
 
 // GroupName is the API group name (should be unique cluster-wide)
