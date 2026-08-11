@@ -25,7 +25,7 @@ jobs:
 
       - name: Build and push
         run: |
-          IMAGE="ghcr.io/2143-Labs/cert-manager-webhook-desec"
+          IMAGE="ghcr.io/2143-labs/cert-manager-webhook-desec"
           docker build -t "$IMAGE:${{ github.sha }}" -t "$IMAGE:latest" .
           docker push "$IMAGE:${{ github.sha }}"
           docker push "$IMAGE:latest"
