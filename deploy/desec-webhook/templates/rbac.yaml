@@ -130,3 +130,42 @@ subjects:
     kind: ServiceAccount
     name: {{ include "desec-webhook.fullname" . }}
     namespace: {{ .Release.Namespace }}
+---
+# Grant the webhook's apiserver-library informers unscoped list/watch on
+# kube-system ConfigMaps (the resourceNames-scoped reader Role above cannot
+# authorize an informer's LIST/WATCH; the weekly :latest digest push on ~Sep 1
+# surfaced this pre-existing gap).
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "desec-webhook.fullname" . }}:webhook-configmap-informer
+  namespace: kube-system
+  labels:
+    app: {{ include "desec-webhook.name" . }}
+    chart: {{ include "desec-webhook.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "desec-webhook.fullname" . }}:webhook-configmap-informer
+  namespace: kube-system
+  labels:
+    app: {{ include "desec-webhook.name" . }}
+    chart: {{ include "desec-webhook.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "desec-webhook.fullname" . }}:webhook-configmap-informer
+subjects:
+  - apiGroup: ""
+    kind: ServiceAccount
+    name: {{ include "desec-webhook.fullname" . }}
+    namespace: {{ .Release.Namespace }}
