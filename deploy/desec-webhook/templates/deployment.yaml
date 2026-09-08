@@ -27,7 +27,6 @@ spec:
           args:
             - --tls-cert-file=/tls/tls.crt
             - --tls-private-key-file=/tls/tls.key
-            - -v=4
           env:
             - name: GROUP_NAME
               value: {{ .Values.groupName | quote }}
@@ -45,6 +44,14 @@ spec:
               scheme: HTTPS
               path: /healthz
               port: https
+          startupProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /healthz
+              port: https
+            failureThreshold: 60
+            periodSeconds: 5
+            timeoutSeconds: 3
           volumeMounts:
             - name: certs
               mountPath: /tls
