@@ -39,11 +39,17 @@ spec:
               scheme: HTTPS
               path: /healthz
               port: https
+            timeoutSeconds: 5
+            failureThreshold: 6
+            periodSeconds: 10
           readinessProbe:
             httpGet:
               scheme: HTTPS
               path: /healthz
               port: https
+            timeoutSeconds: 5
+            failureThreshold: 6
+            periodSeconds: 10
           startupProbe:
             httpGet:
               scheme: HTTPS
